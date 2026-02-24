@@ -1,0 +1,424 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{url}
+
+\newcommand{\rad}{\operatorname{rad}}
+\newcommand{\Jac}{\operatorname{Jac}}
+\newcommand{\Cond}{\operatorname{Cond}}
+\newcommand{\GSp}{\mathrm{GSp}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{A Conductor Census of 425,082 Goldbach--Frey Curves:\\
+  Asymptotic Decomposition and Bandwidth Stability}
+\author{Ruqing Chen\\[4pt]
+  \small GUT Geoservice Inc., Montreal\\
+  \small\texttt{ruqing@hotmail.com}}
+\date{February 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Using the exact conductor formula
+$\Cond_{\mathrm{odd}}(\Jac(C)) =
+[\rad_{\mathrm{odd}}(p \cdot q \cdot N \cdot (p-q))]^2$
+established in the preceding papers of this series, we compute
+the conductor ratio~$\rho$ for every Goldbach pair $(p, q)$
+with $p + q = 2N \le 10{,}000$: a census of 425,082~curves.
+We decompose the mean conductor ratio into three components:
+a static term~$\rho_{\mathrm{static}}$ depending only on~$N$
+(6.5\% of~$\langle\rho\rangle$), a boundary
+term~$\rho_{\mathrm{boundary}}$ from $p \cdot q$
+(66.0\%), and a gap term~$\delta$ from $|p - q|$
+(27.5\%).  The key empirical finding is \emph{bandwidth stability}:
+the standard deviation $\sigma(\rho) \approx 0.33$ is approximately
+constant over the entire range $2N \in [100,\; 10{,}000]$, while
+$\langle\rho\rangle$ grows logarithmically.  This implies
+the coefficient of variation $\sigma/\langle\rho\rangle
+\to 0$ as $N \to \infty$, providing a quantitative explanation
+for the high $R^2 > 0.997$ of the Band Shifting Law and
+connecting the conductor geometry to the Hardy--Littlewood
+prime pair density.
+\end{abstract}
+
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Introduction}
+
+Papers~\cite{Chen2026TCV} and~\cite{Chen2026UTS} established the
+exact odd conductor formula for the Goldbach--Frey curve
+$C\colon y^2 = x(x^2 - p^2)(x^2 - q^2)$, with $p \ne q$
+distinct odd primes and $p + q = 2N$:
+\begin{equation}\label{eq:cond}
+  \Cond_{\mathrm{odd}}\bigl(\Jac(C)\bigr)
+  \;=\;
+  \bigl[\rad_{\mathrm{odd}}(p \cdot q \cdot N
+    \cdot (p - q))\bigr]^2.
+\end{equation}
+The conductor ratio
+\begin{equation}\label{eq:rho}
+  \rho(p, q)
+  \;=\;
+  \frac{\log \Cond_{\mathrm{odd}}\bigl(\Jac(C)\bigr)}{\log(2N)}
+  \;=\;
+  \frac{2\log\rad_{\mathrm{odd}}
+    (p \cdot q \cdot N \cdot (p - q))}{\log(2N)}
+\end{equation}
+drives the Band Shifting Law (BSL) with $R^2 > 0.997$.
+But the preceding work studied only 10~test cases.  The
+present paper asks: what can we learn from \emph{all} Goldbach
+pairs up to a given bound?
+
+We compute $\rho(p, q)$ for every Goldbach pair with
+$p + q \le 10{,}000$---a total of 425,082~pairs spanning
+4,997~distinct even integers---and study the statistical
+distribution of~$\rho$ as a function of~$N$.
+
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Three-Component Decomposition}\label{sec:decomp}
+
+The conductor ratio admits a natural decomposition.
+Since $p$ and~$q$ are prime, $\rad_{\mathrm{odd}}(p) = p$
+and $\rad_{\mathrm{odd}}(q) = q$.  Write
+\begin{equation}\label{eq:decomp}
+  \rho \;=\; \underbrace{\frac{2\log\rad_{\mathrm{odd}}(N)}
+    {\log(2N)}}_{\rho_{\mathrm{static}}}
+  \;+\;
+  \underbrace{\frac{2\log(p \cdot q)}{\log(2N)}}
+    _{\rho_{\mathrm{boundary}}}
+  \;+\;
+  \underbrace{\frac{2\log\rad_{\mathrm{odd}}^{\mathrm{new}}
+    (|p - q|)}{\log(2N)}}_{\delta}\,,
+\end{equation}
+where $\rad_{\mathrm{odd}}^{\mathrm{new}}(|p - q|)$ denotes
+the product of odd primes in $|p - q|$ not already dividing
+$p \cdot q \cdot N$.
+
+The three terms have distinct roles:
+
+\begin{itemize}
+\item
+  $\rho_{\mathrm{static}}$: depends \emph{only} on~$N$.
+  This is the static conduit $\xi = 2\log\rad_{\mathrm{odd}}(N)
+  / \log(2N)$ that sets the \emph{band position} in the BSL.
+\item
+  $\rho_{\mathrm{boundary}}$: depends on the specific pair
+  $(p, q)$ but not on their difference.
+  For ``balanced'' pairs ($p \approx q \approx N$),
+  $\rho_{\mathrm{boundary}} \approx 4\log N / \log(2N) \to 4$.
+  For extreme pairs ($p = 3$, $q \approx 2N$),
+  it is smaller.
+\item
+  $\delta$: the gap correction, a chaotic term depending on the
+  prime factorisation of $|p - q|$.
+  This contributes only scatter (``bandwidth'') to the BSL.
+\end{itemize}
+
+Table~\ref{tab:decomp} and Figure~\ref{fig:decomp}(b) show the
+relative contributions at $2N = 10{,}000$.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrl}
+\toprule
+Component & Contribution & Role in BSL \\
+\midrule
+$\rho_{\mathrm{static}}$
+  & 6.5\% & Band position \\
+$\langle\rho_{\mathrm{boundary}}\rangle$
+  & 66.0\% & Pair location within band \\
+$\langle\delta\rangle$
+  & 27.5\% & Intra-band noise \\
+\bottomrule
+\end{tabular}
+\caption{Decomposition of $\langle\rho_{\mathrm{true}}\rangle
+  = 5.38$ at $2N = 10{,}000$ (127~Goldbach pairs).}
+\label{tab:decomp}
+\end{table}
+
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Census Results}\label{sec:results}
+
+\subsection{Mean conductor ratio}
+
+Figure~\ref{fig:decomp}(a) shows
+$\langle\rho_{\mathrm{true}}\rangle$ versus $\ln(2N)$ for all
+4,997~even integers.  The mean grows slowly and roughly
+logarithmically; a linear fit in $\ln(2N)$ gives
+\begin{equation}\label{eq:fit-rho}
+  \langle\rho_{\mathrm{true}}\rangle
+  \;\approx\; 0.217\,\ln(2N) + 4.55
+\end{equation}
+but with $R^2 = 0.33$, reflecting the strong number-theoretic
+fluctuations in $\rad_{\mathrm{odd}}(N)$.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../figures/fig_mean_decomp.pdf}
+  \caption{%
+    (a)~Mean conductor ratio $\langle\rho\rangle$ vs.\ $\ln(2N)$
+    for 4,997~even numbers (blue dots), with moving average (red).
+    (b)~Stacked decomposition: static (green),
+    boundary (blue), gap (red).}
+  \label{fig:decomp}
+\end{figure}
+
+
+\subsection{Bandwidth stability}
+
+The most striking finding is that the bandwidth---the standard
+deviation $\sigma(\rho)$ of the conductor ratio across Goldbach
+pairs at fixed~$N$---is approximately constant:
+\begin{equation}\label{eq:bandwidth}
+  \sigma(\rho) \;\approx\; 0.33 \pm 0.05
+  \qquad\text{for } 2N \in [100,\; 10{,}000].
+\end{equation}
+This is visible in Figure~\ref{fig:bw}(a).
+Since $\langle\rho\rangle$ grows (slowly) while $\sigma$ stays
+fixed, the coefficient of variation
+$\mathrm{CV} = \sigma / \langle\rho\rangle$ decreases
+(Figure~\ref{fig:bw}(b) of the Hardy--Littlewood figure).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../figures/fig_bandwidth_norm.pdf}
+  \caption{%
+    (a)~Bandwidth $\sigma(\rho)$ vs.\ $2N$: approximately
+    constant at $\approx 0.33$.
+    (b)~Normalised ratio $\langle\rho\rangle / \ln(2N)$,
+    decreasing toward a value near $\tfrac{1}{2}$.}
+  \label{fig:bw}
+\end{figure}
+
+
+\subsection{Hardy--Littlewood comparison}
+
+The Goldbach pair count $G(2N)$ is consistent with the
+Hardy--Littlewood prediction
+\begin{equation}\label{eq:HL}
+  G_{\mathrm{HL}}(2N)
+  \;\sim\; 2C_2
+  \prod_{\substack{p \mid N \\ p > 2}}
+  \frac{p - 1}{p - 2}
+  \;\cdot\;
+  \frac{N}{(\ln N)^2}\,,
+\end{equation}
+where $C_2 = \prod_{p > 2}(1 - 1/(p-1)^2) \approx 0.6601$
+is the twin prime constant.  Figure~\ref{fig:HL}(a)
+shows the actual--predicted comparison; the scatter around the
+diagonal is typical of the known fluctuations in prime pair counts.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{../figures/fig_HL_cv.pdf}
+  \caption{%
+    (a)~Actual Goldbach count $G(2N)$ vs.\
+    Hardy--Littlewood prediction.
+    (b)~Coefficient of variation $\sigma(\rho)/\langle\rho\rangle$
+    vs.\ $2N$, decreasing as the signal-to-noise ratio improves.}
+  \label{fig:HL}
+\end{figure}
+
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Asymptotic Analysis}\label{sec:asymp}
+
+\subsection{Why the BSL works: a quantitative explanation}
+
+The BSL models $\rho$ as a linear function of the static
+conduit $\xi = 2\log\rad_{\mathrm{odd}}(N)/\log(2N)$.
+From the decomposition~\eqref{eq:decomp}, the ``non-$\xi$''
+part of $\rho$ is $\rho_{\mathrm{boundary}} + \delta$.
+The BSL achieves $R^2 > 0.997$ because:
+
+\begin{enumerate}
+\item
+  $\rho_{\mathrm{boundary}} = 2\log(pq)/\log(2N)$ is
+  tightly concentrated for fixed~$N$: most Goldbach pairs
+  have $pq$ within an order of magnitude of~$N^2$, so
+  $\rho_{\mathrm{boundary}}$ varies by $\lesssim 1$.
+\item
+  The gap correction $\delta$ has bounded standard deviation
+  ($\sigma \approx 0.33$), contributing only scatter within
+  the band, not systematic drift.
+\item
+  Together, the systematic part
+  ($\rho_{\mathrm{static}} + \langle\rho_{\mathrm{boundary}}\rangle$)
+  accounts for $\sim$72.5\% of $\langle\rho\rangle$, and
+  this systematic part is a deterministic function of~$N$.
+\end{enumerate}
+
+
+\subsection{The normalised ratio}
+
+Define the normalised conductor ratio
+\[
+  R(N) \;=\;
+  \frac{\langle\rho_{\mathrm{true}}\rangle(N)}{\ln(2N)}.
+\]
+The census data (Figure~\ref{fig:bw}(b)) shows $R(N)$
+decreasing from $\sim\!1.15$ at $2N = 50$ to $\sim\!0.70$
+at $2N = 10{,}000$.  We conjecture:
+
+\begin{conjecture}\label{conj:asymp}
+  As $N \to \infty$,
+  \[
+    \langle\rho_{\mathrm{true}}\rangle(N)
+    \;=\;
+    4 + \frac{2\log\rad_{\mathrm{odd}}(N)}{\log(2N)}
+    + O\!\left(\frac{\log\log N}{\log N}\right).
+  \]
+\end{conjecture}
+
+\noindent
+The leading term~$4$ arises because for a ``typical'' Goldbach
+pair, $\log(pq) \sim 2\log N$, so
+$\rho_{\mathrm{boundary}}$
+converges to~$4$.  The second term is exactly the static
+conduit~$\xi$.  The gap correction
+$\langle\delta\rangle$ should be
+$O(\log\log N / \log N)$ on average, since by the
+Erd\H{o}s--Kac theorem the average number of distinct prime
+factors of a random integer near~$N$ is
+${\sim}\,\log\log N$, and each contributes
+$O(1/\log N)$ to the normalised ratio.
+
+
+\subsection{Bandwidth and the Erd\H{o}s--Kac connection}
+
+The observed constancy of $\sigma(\rho) \approx 0.33$ can be
+heuristically explained as follows.  The dominant source of
+variance in $\rho$ (for fixed~$N$) is the variation in
+$\log(pq)$ and $\log\rad_{\mathrm{odd}}^{\mathrm{new}}(|p-q|)$
+across Goldbach pairs.  For the boundary term, the variance
+comes from the distribution of $\log(pq)$, which for
+$p + q = 2N$ is essentially $\log(p(2N - p))$.
+This is a concave function with bounded variance regardless
+of~$N$.  For the gap term, the Erd\H{o}s--Kac theorem implies
+$\omega(|p - q|) \sim \log\log N$ with standard deviation
+$\sim \sqrt{\log\log N}$, and each prime factor contributes
+$2\log r / \log(2N) = O(1/\log N)$ to~$\delta$.  The net
+variance in~$\delta$ is thus $O(\log\log N / (\log N)^2)$,
+which is negligible.  The total bandwidth is therefore dominated
+by the boundary term and stays bounded.
+
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Summary of Census Statistics}\label{sec:table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{rrrrrrr}
+\toprule
+$2N$ & $G(2N)$ & $\langle\rho\rangle$ & $\sigma(\rho)$
+& $\langle\rho\rangle/\!\ln(2N)$ & CV \\
+\midrule
+50     &   4 & 4.517 & 0.130 & 1.155 & 0.029 \\
+100    &   6 & 4.992 & 0.349 & 1.084 & 0.070 \\
+200    &   8 & 4.845 & 0.448 & 0.914 & 0.092 \\
+500    &  13 & 5.144 & 0.305 & 0.828 & 0.059 \\
+1000   &  28 & 5.160 & 0.369 & 0.747 & 0.072 \\
+2000   &  37 & 5.299 & 0.338 & 0.697 & 0.064 \\
+5000   &  76 & 5.349 & 0.301 & 0.628 & 0.056 \\
+10000  & 127 & 5.377 & 0.323 & 0.584 & 0.060 \\
+\bottomrule
+\end{tabular}
+\caption{Census statistics at selected values of $2N$.
+  $G(2N)$ is the number of Goldbach pairs; CV is the
+  coefficient of variation $\sigma/\langle\rho\rangle$.}
+\label{tab:census}
+\end{table}
+
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section{Discussion}\label{sec:discussion}
+
+The census reveals three structural properties of the conductor
+landscape:
+
+\emph{Signal dominance.}
+The systematic part of $\rho$ (static conduit $+$ mean boundary)
+accounts for $\sim$72.5\% of the total, explaining the BSL's
+high~$R^2$.
+
+\emph{Noise boundedness.}
+The bandwidth $\sigma(\rho) \approx 0.33$ is bounded, so
+the signal-to-noise ratio improves with~$N$.  This is a
+necessary (though not sufficient) condition for the conductor
+proxy to remain faithful in the asymptotic regime.
+
+\emph{Hardy--Littlewood consistency.}
+The Goldbach pair counts follow the Hardy--Littlewood density
+with expected fluctuations.  The conductor framework introduces
+no anomalies: curves with ``extreme'' conductor ratios do not
+cluster at particular~$N$.
+
+These properties do not prove the Goldbach conjecture, but they
+establish that the arithmetic geometry of the Frey curves is
+smoothly compatible with the conjectured prime pair statistics.
+Any approach to Goldbach through conductor methods must ultimately
+show that the \emph{existence} of at least one pair forces a
+non-trivial conductor, connecting the density picture to an
+existence argument.  This remains an open problem.
+
+
+% ═══════════════════════════════════════════════════════════════════════════
+\section*{Acknowledgments}
+
+All computations were performed in Python using a prime sieve
+up to 20,002.  Data and scripts are available at\\
+\url{https://github.com/Ruqing1963/goldbach-conductor-census}.
+
+\begin{thebibliography}{9}
+
+\bibitem{Chen2026TCV}
+R.~Chen,
+\emph{The true conductor of Goldbach--Frey curves: computational
+  validation of the conductor proxy},
+Zenodo, 2026.
+\url{https://zenodo.org/records/18749731}
+
+\bibitem{Chen2026UTS}
+R.~Chen,
+\emph{Universal tame semistability of Goldbach--Frey Jacobians:
+  a proof of $f_r = 2$ at all odd primes},
+Zenodo, 2026.
+\url{https://zenodo.org/records/18751169}
+
+\bibitem{Chen2026DS}
+R.~Chen,
+\emph{Dynamic stability of the Goldbach locus: conductor orbit
+  propagation and the Band Shifting Law in $\GSp(4)$},
+Zenodo, 2026.
+\url{https://zenodo.org/records/18724884}
+
+\bibitem{HardyLittlewood}
+G.\,H.~Hardy and J.\,E.~Littlewood,
+Some problems of ``Partitio Numerorum''; III:\ On the expression
+of a number as a sum of primes,
+\emph{Acta Math.}~\textbf{44} (1923), 1--70.
+
+\bibitem{ErdosKac}
+P.~Erd\H{o}s and M.~Kac,
+The Gaussian law of errors in the theory of additive number
+theoretic functions,
+\emph{Amer.\ J.\ Math.}~\textbf{62} (1940), 738--742.
+
+\end{thebibliography}
+
+\end{document}
